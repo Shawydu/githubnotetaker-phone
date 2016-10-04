@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
+import api from '../Utils/api';
+import Dashboard from './Dashboard';
 
 import {
 	View,
 	Text,
-	StyleSheet
+	StyleSheet,
+	TextInput,
+	TouchableHighlight,
+	ActivityIndicatorIOS
 } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -51,10 +56,68 @@ const styles = StyleSheet.create({
 });
 
 class Main extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			username: '',
+			isLoading: false,
+			error: false
+		}
+	}
+	handleChange(event) {
+		this.setState({
+			username: event.nativeEvent.text
+		});
+	}
+	handleSubmit() {
+		this.setState({
+			isLoading: true
+		});
+		api.getBio(this.state.username)
+			.then((res) => {
+				console.log("Resource", res);
+				if (res.message === 'Not Found') {
+					this.setState({
+						error: 'User Not Found',
+						isLoading: false
+					})
+				} else {
+					this.props.navigator.push({
+						title: res.name || "Select an Option",
+						component: Dashboard,
+						passProps: {userInfo: JSON.stringify(res)}
+					});
+					this.setState({
+						username: '',
+						isLoading: false,
+						error: false
+					})
+				}
+			});
+	}
   render(){
+  	var showErr = (
+  		this.state.error ? <Text> {this.state.error} </Text> : <View></View>
+  	);
     return (
     	<View style={styles.mainContainer}>
-    		<Text> Testing the Router </Text>
+    		<Text style={styles.title} > Search for a Github User </Text>
+    		<TextInput 
+    			style={styles.searchInput}
+    			value={this.state.username}
+    			onChange={this.handleChange.bind(this)} />
+    		<TouchableHighlight
+    			style={styles.button}
+    			onPress={this.handleSubmit.bind(this)}
+    			underlayColor="white">
+    			<Text style={styles.buttonText} > SEARCH </Text>
+    		</TouchableHighlight>
+    		<ActivityIndicatorIOS
+    			animating={this.state.isLoading}
+    			color="#111"
+    			size="large"
+    		></ActivityIndicatorIOS>
+    		{showErr}
     	</View>
     );
   }

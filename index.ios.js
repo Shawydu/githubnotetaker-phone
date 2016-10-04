@@ -24,12 +24,12 @@ const styles = StyleSheet.create({
 class githubNotetaker extends Component {
   render() {
     return (
-      <NavigatorIOS 
+      <NavigatorIOS
         style={styles.container}
         initialRoute={{
         title: 'Github Notetaker',
         component: Main
-      }} />
+        }} />
     );
   }
 }
