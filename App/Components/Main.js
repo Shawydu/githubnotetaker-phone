@@ -8,7 +8,7 @@ import {
 	StyleSheet,
 	TextInput,
 	TouchableHighlight,
-	ActivityIndicatorIOS
+	ActivityIndicator
 } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -85,7 +85,7 @@ class Main extends React.Component {
 					this.props.navigator.push({
 						title: res.name || "Select an Option",
 						component: Dashboard,
-						passProps: {userInfo: JSON.stringify(res)}
+						passProps: {userInfo: res}
 					});
 					this.setState({
 						username: '',
@@ -112,11 +112,11 @@ class Main extends React.Component {
     			underlayColor="white">
     			<Text style={styles.buttonText} > SEARCH </Text>
     		</TouchableHighlight>
-    		<ActivityIndicatorIOS
+    		<ActivityIndicator
     			animating={this.state.isLoading}
     			color="#111"
     			size="large"
-    		></ActivityIndicatorIOS>
+    		></ActivityIndicator>
     		{showErr}
     	</View>
     );
