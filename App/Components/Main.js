@@ -75,7 +75,6 @@ class Main extends React.Component {
 		});
 		api.getBio(this.state.username)
 			.then((res) => {
-				console.log("Resource", res);
 				if (res.message === 'Not Found') {
 					this.setState({
 						error: 'User Not Found',
