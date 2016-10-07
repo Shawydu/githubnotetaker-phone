@@ -72,7 +72,7 @@ class Repositories extends React.Component {
   }
 }
 
-Repositories.PropType = {
+Repositories.PropTypes = {
 	userInfo: React.PropTypes.object.isRequired,
 	repos: React.PropTypes.array.isRequired
 };

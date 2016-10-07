@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component} from 'react';
 
 import {
 	View,
@@ -24,7 +24,7 @@ class Web extends React.Component {
   }
 }
 
-Web.PropType = {
+Web.PropTypes = {
 	url: React.PropTypes.string.isRequired
 };
 

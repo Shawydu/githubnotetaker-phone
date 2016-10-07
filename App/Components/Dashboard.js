@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Profile from './Profile';
 import Repositories from './Repositories';
+import Notes from './Notes';
 import api from '../Utils/api';
 
 import {
@@ -65,7 +66,22 @@ class Dashboard extends React.Component {
 			});
 	}
 	goToNotes() {
-		console.log('Going to Notes Page');
+		api.getNotes(this.props.userInfo.login)
+			.then((res) => {
+				console.log("Res: ", res);
+				res = res || {};
+				this.props.navigator.push({
+					component: Notes,
+					title: 'Notes',
+					passProps: {
+						userInfo: this.props.userInfo,
+						note: res
+					}
+				});
+			})
+			.catch((err) => {
+				console.log(err);
+			});
 	}
   render(){
     return (
